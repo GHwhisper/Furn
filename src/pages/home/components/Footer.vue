@@ -2,39 +2,39 @@
     <footer>
         <div class="footer-links">
             <div class="footer-item">
-                <h4 class="title">Infomation</h4>
+                <h4 class="title">信息</h4>
                 <ul class="list">
-                    <li><a class="link" href="">About Us</a></li>
-                    <li><a class="link" href="">Contact Us</a></li>
-                    <li><a class="link" href="">News</a></li>
-                    <li><a class="link" href="">Store</a></li>
+                    <li><router-link class="link" to="#">关于我们</router-link></li>
+                    <li><router-link class="link" to="#">联系我们</router-link></li>
+                    <li><router-link class="link" to="#"></router-link></li>
+                    <li><router-link class="link" to="#"></router-link></li>
                 </ul>
             </div>
             <div class="footer-item">
-                <h4 class="title">Infomation</h4>
+                <h4 class="title">商品</h4>
                 <ul class="list">
-                    <li><a class="link" href="">About Us</a></li>
-                    <li><a class="link" href="">Contact Us</a></li>
-                    <li><a class="link" href="">News</a></li>
-                    <li><a class="link" href="">Store</a></li>
+                    <li><router-link class="link" to="#">木椅</router-link></li>
+                    <li><router-link class="link" to="#">沙发</router-link></li>
+                    <li><router-link class="link" to="#">床</router-link></li>
+                    <li><router-link class="link" to="#">衣柜</router-link></li>
                 </ul>
             </div>
             <div class="footer-item">
-                <h4 class="title">Infomation</h4>
+                <h4 class="title">作者</h4>
                 <ul class="list">
-                    <li><a class="link" href="">About Us</a></li>
-                    <li><a class="link" href="">Contact Us</a></li>
-                    <li><a class="link" href="">News</a></li>
-                    <li><a class="link" href="">Store</a></li>
+                    <li><router-link class="link" to="#">梁爽</router-link></li>
+                    <li><router-link class="link" to="#">陈华毅</router-link></li>
+                    <li><router-link class="link" to="#"></router-link></li>
+                    <li><router-link class="link" to="#"></router-link></li>
                 </ul>
             </div>
             <div class="footer-item">
-                <h4 class="title">Infomation</h4>
+                <h4 class="title">通讯</h4>
                 <ul class="list">
-                    <li><a class="link" href="">About Us</a></li>
-                    <li><a class="link" href="">Contact Us</a></li>
-                    <li><a class="link" href="">News</a></li>
-                    <li><a class="link" href="">Store</a></li>
+                    <li><router-link class="link" to="#">意见建议</router-link></li>
+                    <li><router-link class="link" to="#"></router-link></li>
+                    <li><router-link class="link" to="#"></router-link></li>
+                    <li><router-link class="link" to="#"></router-link></li>
                 </ul>
             </div>
         </div>
@@ -54,18 +54,18 @@
             width 1170px
         .footer-item
             width 25%
-    @media screen and (min-width: 991px) and (max-width: 1200px)
+    @media screen and (min-width: 992px) and (max-width: 1200px)
         footer
             width 970px
         .footer-item
             width 25%
-    @media screen and (min-width: 766px) and (max-width: 990px)
+    @media screen and (min-width: 768px) and (max-width: 991px)
         footer
             width 750px
         .footer-item
             width 50%
             margin-bottom 50px
-    @media screen and (max-width: 765px)
+    @media screen and (max-width: 767px)
         footer
         .footer-item
             width 100%
@@ -76,6 +76,8 @@
         margin 0 auto
         .footer-links
             min-height 300px
+            display flex
+            flex-wrap wrap
             .footer-item
                 display inline-block
                 padding 0 .3rem
@@ -86,6 +88,8 @@
                     font-weight 700
                     margin 0 0 45px
                 .link
+                    height 21px
+                    line-height 21px
                     color $fontColor_intro
                     font-size .32rem
                     font-weight 500

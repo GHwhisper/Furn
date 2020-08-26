@@ -1,51 +1,63 @@
 <template>
-    <div class="navigator">
+    <div :class="top <=100 ? 'navigator' : 'navigator narrow-navigator'">
         <!--搜索框-->
         <transition name="search">
             <div class="search" v-show="showSearch">
                 <div class="srh-container">
                     <span class="iconfont search-icon">&#xe718;</span>
-                    <input class="search-input" type="text" placeholder="Search">
+                    <input class="search-input" type="search" placeholder="搜索" v-model="srchContent" @keyup.enter="handleSrch">
                     <span class="iconfont cancel-icon" @click="hideSearchBar">&#xe61a;</span>
                 </div>
             </div>
         </transition>
         <!--导航栏-->
-        <div class="nav-bar">
+        <div :class="top <= 100 ? 'nav-bar' : 'nav-bar narrow-nav-bar'">
             <button class="iconfont nav-menu-btn" @click="toggleNav">&#xe60a;</button>
-            <a href="" class="brand">Furn.</a>
-<!--            <transition name="nav">-->
-                <ul class="nav" :style="showNav ? inlineBlockStyle : ''">
-                    <li class="nav-item"><a href="" class="active">Home</a></li>
-                    <li class="nav-item"><a href="">New Arrival</a></li>
-                    <li class="nav-item"><a href="">Features</a></li>
-                    <li class="nav-item"><a href="">Blogs</a></li>
-                    <li class="nav-item"><a href="">Contact</a></li>
-                </ul>
-<!--            </transition>-->
+            <a href="/" class="brand">悦家</a>
+            <ul class="nav" :style="showNav ? inlineBlockStyle : ''">
+                <li @click="toggleNav" class="nav-item"><router-link to="/">主页</router-link></li>
+                <li @click="toggleNav" class="nav-item"><router-link to="/#newarr">新品推荐</router-link></li>
+                <li @click="toggleNav" class="nav-item"><router-link to="/#collection">珍品收藏</router-link></li>
+                <li @click="toggleNav" class="nav-item"><router-link to="/#feature">独家特色</router-link></li>
+                <li @click="toggleNav" class="nav-item"><router-link to="/category">更多家具</router-link></li>
+            </ul>
             <ul class="icons">
                 <!--搜索-->
                 <li class="icon-item" @click="toggleSearchBar"><a href="#" class="iconfont">&#xe643;</a></li>
-                <!--设置-->
-                <li class="icon-item"><a href="#" class="iconfont">&#xe624;</a></li>
+                <!--用户-->
+                <li class="icon-item" v-if="!token">
+                    <router-link to="/login" class="iconfont">&#xe658;</router-link>
+                </li>
+                <li class="icon-item" v-else>
+                    <el-dropdown trigger="hover">
+                        <el-avatar :src="userInfo.avatarUrl" icon="el-icon-user-solid" size="small" @click.native="goPage('/personal')"></el-avatar>
+                        <el-dropdown-menu slot="dropdown">
+                            <el-dropdown-item @click.native="goPage('/personal')">个人中心</el-dropdown-item>
+                            <el-dropdown-item @click.native="goPage('/order/all')">订单中心</el-dropdown-item>
+                            <el-dropdown-item @click.native="goPage('/setup/info')">账号设置</el-dropdown-item>
+                            <el-dropdown-item @click.native="logOut">退出</el-dropdown-item>
+                        </el-dropdown-menu>
+                    </el-dropdown>
+                </li>
                 <!--购物车-->
                 <li class="icon-item cart-li" @mouseover="showCartBar" @mouseleave="hideCartBar">
-                    <a href="#" class="iconfont cart-icon">&#xe607;
+                    <router-link to="/cart" class="iconfont cart-icon">&#xe607;
                         <span class="cart-num">{{qtyCount}}</span>
-                    </a>
+                    </router-link>
                     <transition name="cart">
                         <ul class="cart" v-show="showCart">
-                            <router-link tag="li" to="#" class="cart-item" v-for="(item, index) in cartList" :key="item.id">
-                                <img :src="require(`../../assets/images/${item.img}`)" :alt="item.name">
+                            <router-link tag="li" :to="{path: `/product/detail/${item.productId}`, query: {skuid: item.id}}" @click="this.showCart = false" class="cart-item" v-for="(item, index) in cartList" :key="item.shoppingCartId">
+                                <img :src="item.img" :alt="item.name">
                                 <div class="info">
-                                    <h6>{{item.name}}<br>{{item.type}}</h6>
-                                    <p>{{item.num}}X - ￥{{singleCost(index)}}</p>
+                                    <h6>{{item.name}}</h6>
+                                    <p>{{item.num}}X - ￥{{singleCost(index).toFixed(2)}}</p>
                                 </div>
-                                <span class="iconfont delete" @click="deleteCommodity(index)">&#xe619;</span>
+                                <span class="iconfont delete" @click.prevent="deleteCommodity(item.shoppingCartId)">&#xe619;</span>
                             </router-link>
+                            <li v-if="cartList.length === 0" class="none-tips">购物车空空如野~</li>
                             <li class="total">
-                                <span>Total: ￥{{totalCost}}</span>
-                                <button class="btn">View Cart</button>
+                                <span>合计： ￥{{totalCost.toFixed(2)}}</span>
+                                <button class="btn" @click="toMyCart">我的购物车</button>
                             </li>
                         </ul>
                     </transition>
@@ -56,6 +68,8 @@
 </template>
 
 <script>
+    import axios from 'axios'
+    import { mapState, mapMutations } from 'vuex'
     export default {
         name: 'Navigation',
         props: {
@@ -63,44 +77,50 @@
         },
         data() {
             return {
+                srchContent: '',    //搜索内容
                 showCart: false,    //购物车
                 showSearch: false,  //搜索框
-                showNav: false, //下拉导航栏
+                showNav: false,     //下拉导航栏
                 inlineBlockStyle: { //下拉导航栏内联inline-block
                     display: 'inline-block'
                 },
-                cartList: [
-                    {
-                        id: '0001',
-                        name: 'Arm',
-                        type: 'Chair',
-                        img: 'a-chair.png',
-                        num: 1,
-                        price: 1800
-                    },
-                    {
-                        id: '0002',
-                        name: 'Single',
-                        type: 'ArmChair',
-                        img: 'b-chair.png',
-                        num: 2,
-                        price: 1800
-                    },
-                    {
-                        id: '0003',
-                        name: 'Wooden',
-                        type: 'Chair',
-                        img: 'c-chair.png',
-                        num: 3,
-                        price: 1800
-                    }
-                ],
+                cartList: [],
+                top: 0,  // 滚动距离
+                userInfo: {}
             }
         },
+        created() {
+            this.bus.$on('updateCart', this.getCartInfo)
+        },
         mounted() {
-
+            if(this.token) {     // 登录状态才请求数据，非登录状态用户可先正常浏览
+                this.getUserInfo()
+                this.getCartInfo()
+            }
         },
         methods: {
+            async getUserInfo() {
+                if(this.token) {
+                    try {
+                        let res = await axios.get('/api/userInfo')
+                        this.userInfo = res.data
+                    } catch (e) {
+                        this.removeLoginInfo()
+                        this.$router.replace('/')
+                    }
+                }
+            },
+            async getCartInfo() {   // 购物车信息
+                if(this.token) {
+                    try {
+                        let res = await axios.get('/api/showShoppingCat')
+                        this.cartList = res.data
+                    } catch (e) {
+                        this.removeLoginInfo()
+                        this.$router.replace('/')
+                    }
+                }
+            },
             toggleSearchBar() { // 显示/隐藏搜索栏
                 this.showSearch = !this.showSearch
             },
@@ -113,17 +133,59 @@
             hideCartBar() {     // 隐藏购物车
                 this.showCart = false
             },
-            deleteCommodity(index) { // 删除商品
-                this.cartList.splice(index, 1)
+            deleteCommodity(id) { // 删除商品
+                this.$confirm('确认删除该商品吗？', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    axios.post('/api/deleteShoppingCat', {
+                        shoppingCatIds: [id]
+                    }).then(res => {
+                        let data = res.data
+                        if(data.deleteStatus === true) {
+                            this.getCartInfo()
+                        } else {
+                            this.$message({showClose: true, message: '删除失败', type: 'error', duration: 1500})
+                        }
+                    }).catch(() => {this.$message({showClose: true, message: '删除失败', type: 'error', duration: 1500})})
+                }).catch(() => {})
             },
-            toggleNav() {   // 显示/隐藏max-width: 990px时的导航
+            toggleNav() {   // 显示/隐藏max-width: 991px时的导航
                 this.showNav = !this.showNav
             },
             singleCost(index) { // 购物车单种商品合计
                 return this.cartList[index].num * this.cartList[index].price
             },
+            handleScroll() {
+                this.top = document.documentElement.scrollTop  || document.body.scrollTop
+            },
+            toMyCart() {
+                this.$router.push({path: '/cart'})
+            },
+            handleSrch() {  // 搜索
+                if(this.srchContent !== '') {
+                    this.$router.push({
+                        path: '/list',
+                        query: { srch: this.srchContent }
+                    })
+                    this.srchContent = ''
+                }
+            },
+            goPage(url) {
+                this.$router.push({path: url})
+            },
+            async logOut() {  // 退出登录
+                let res = await axios.get('/api/loginOut')
+                if(res.data.status === true) {
+                    this.removeLoginInfo()
+                    this.goPage('/login')
+                }
+            },
+            ...mapMutations(['removeLoginInfo'])
         },
         computed: {
+            ...mapState(['token']),
             qtyCount() {   // 购物车商品数
                 let count = 0
                 this.cartList.forEach(item => {
@@ -138,53 +200,70 @@
                 })
                 return total
             }
-        }
+        },
+        watch: {
+            token() {   // 监听到token变化，说明是用户登录了或切换了用户
+                this.getUserInfo()
+                this.getCartInfo()
+            }
+        },
+        activated() {
+            window.addEventListener('scroll', this.handleScroll)
+        },
+        deactivated() {
+            window.removeEventListener('scroll', this.handleScroll)
+        },
     }
 </script>
 
 <style lang="stylus" scoped>
     @import '~styles/varibles.styl'
-    a
-        color $fontColor
-        font-size .5rem
-        font-weight bolder
-        text-transform capitalize
-        transition .3s;
-        -webkit-transition .3s; /* Safari */
-    a.active
+    .el-dropdown
+        padding 0 10px
+        font-size .34rem
+        cursor default
+        &:hover
+            color $activeColor
+        .el-icon-arrow-down
+            font-size .28rem
+            color $fontColor_intro
+    .el-dropdown-menu__item:hover
         color $activeColor
-    li:hover a
-        color $activeColor
-
+        background-color transparent
     // 导航及搜索的宽度响应
     @media screen and (min-width: 1201px)
         .nav-bar
         .srh-container
             width 1170px
-    @media screen and (min-width: 991px) and (max-width: 1200px)
+    @media screen and (min-width: 992px) and (max-width: 1200px)
         .nav-bar
         .srh-container
             width 970px
-    @media screen and (min-width: 766px) and (max-width: 990px)
+    @media screen and (min-width: 768px) and (max-width: 991px)
         .nav-bar
         .srh-container
             width 750px
-    @media screen and (max-width: 765px)
+    @media screen and (max-width: 767px)
         .nav-bar
-            width 90%
         .srh-container
             width 95%
-        .nav-menu-btn
-        .nav
-            position relative
-            left -.2rem
-
+    a
+        color $fontColor
+        font-size .5rem
+        font-weight bolder
+        text-transform capitalize
+        transition .3s
+        -webkit-transition .3s /* Safari */
+    a.active
+        color $activeColor
+    li:hover a
+        color $activeColor
     .navigator
         width 100%
         background-color $bgc_1
         position fixed
         top 0
-        z-index: 1000
+        z-index 1000
         .search
             height 1.2rem
             background-color: #333
@@ -220,12 +299,12 @@
             text-align center
             vertical-align center
             position relative
-            @media screen and (min-width: 991px)
+            @media screen and (min-width: 992px)
                 .nav-menu-btn
                     display none
                 .brand
                     float left
-            @media screen and (max-width: 990px)
+            @media screen and (max-width: 991px)
                 .nav-menu-btn
                     display inline-block
                     font-size .48rem
@@ -238,13 +317,12 @@
             .nav-menu-btn
                 color $activeColor
                 background-color: transparent
-                border .02rem solid $activeColor
-                border-radius .08rem
+                border 1px solid $activeColor
+                border-radius 4px
                 padding .25rem .15rem
                 font-size .4rem
                 position absolute
-                top 50%
-                transform translateY(-50%)
+                top .4rem
             .brand
                 font-size .48rem
                 font-family Roboto, sans-serif
@@ -255,17 +333,19 @@
                     li.nav-item
                         float left
                         padding .84rem .6rem
+                        transition padding linear .2s
                         a
                             font-size .32rem
-            @media screen and (min-width: 991px) and (max-width: 1200px)
+            @media screen and (min-width: 992px) and (max-width: 1200px)
                 .nav
                     display inline-block
                     li.nav-item
                         float left
                         padding .84rem .2rem
+                        transition padding linear .2s
                         a
                             font-size .32rem
-            @media screen and (max-width: 990px)
+            @media screen and (max-width: 991px)
                 &
                     text-align left
                     box-sizing border-box
@@ -273,24 +353,32 @@
                         width 100%
                         display none
                         position absolute
-                        top 2rem
+                        top 1.6rem
                         background-color: #ffffff
+                        box-sizing border-box
                         padding 0 .2rem
+                        box-shadow 0 2px 5px rgba(0, 0, 0, .2)
                         li.nav-item
                             padding .3rem 0
+                            transition padding linear .2s
                             a
                                 font-size .3rem
             .icons
                 float right
                 display inline-block
                 position relative
-                right -.3rem
+                left .3rem
                 li.icon-item
                     float left
                     padding .82rem .3rem
                     a
                         font-size .36rem
                         font-weight normal
+                    .el-dropdown
+                        position relative
+                        top -5px
+                        .el-avatar
+                            cursor pointer
                     a.cart-icon
                         position relative
                         span.cart-num
@@ -305,24 +393,26 @@
                             color #ffffff
                             background-color: $activeColor
                             border-radius 50%
-                @media screen and (max-width: 765px)
-                    li.icon-item
-                        padding .82rem .15rem
+                @media screen and (max-width: 767px)
+                    &
+                        left 0
+                        li.icon-item
+                            padding .82rem .15rem
                 li.cart-li
                     position relative
                     ul.cart
                         width 5rem
                         max-height 5rem
-                        border .01rem solid $border
+                        border 1px solid $border
                         background-color: #ffffff
                         position absolute
-                        top 2rem
+                        top 1.6rem
                         right 0
                         z-index 10
                         overflow-y auto
                         li.cart-item
                             padding .3rem
-                            border-bottom .01rem solid $border
+                            border-bottom 1px solid $border
                             position relative
                             display flex
                             flex-direction row
@@ -337,8 +427,13 @@
                                 line-height .4rem
                                 text-align left
                                 h6
+                                    width 100px
                                     font-weight 600
                                     font-size .2rem
+                                    display -webkit-box
+                                    -webkit-box-orient vertical
+                                    -webkit-line-clamp 2
+                                    overflow hidden
                                 p
                                     font-size .24rem
                                     color #a09e9c
@@ -349,11 +444,17 @@
                                 top .3rem
                                 right .3rem
                                 cursor pointer
+                        li.none-tips
+                            height 100px
+                            line-height 100px
+                            color $fontColor_intro
+                            font-size .26rem
+                            text-align center
                         .total
                             padding .3rem
                             font-size .26rem
                             font-weight bold
-                            border-bottom .01rem solid $border
+                            border-bottom 1px solid $border
                             display flex
                             flex-direction row
                             justify-content space-between
@@ -363,7 +464,8 @@
                                 height .6rem
                                 color #ffffff
                                 background-color: $activeColor
-                                border-radius .06rem
+                                border-radius 3px
+                                cursor pointer
                     // 设置滚动条样式
                     .cart::-webkit-scrollbar    /*滚动条整体样式*/
                         width 5px               /*高宽分别对应横竖滚动条的尺寸*/
@@ -375,20 +477,26 @@
                         -webkit-box-shadow inset 0 0 5px rgba(0, 0, 0, 0.2)
                         border-radius 0
                         background rgba(0, 0, 0, .6)
-    //// 下拉导航栏入场动画
-    //@keyframes nav-in
-    //{
-    //    0% {
-    //        height 0
-    //    }
-    //    100% {
-    //        height 4.5rem
-    //    }
-    //}
-    //.nav-enter-active
-    //    animation nav-in linear .1s
-    //.nav-leave-to
-    //    animation nav-in linear .1s reverse
+    // 页面滚动后的导航栏
+    .narrow-navigator
+        background: #ffffff
+        box-shadow 0 2px 5px rgba(0, 0, 0, .2)
+        // 页面滚动后的导航栏中各选项
+        .narrow-nav-bar
+            height 1.6rem !important
+            .brand
+                padding .76rem 0 .36rem !important
+            @media screen and (max-width: 991px)
+                .nav
+                    padding .5rem .2rem
+            li.nav-item
+                padding .64rem .6rem !important
+            @media screen and (min-width: 768px)
+                li.icon-item
+                    padding .82rem .3rem .42rem !important
+            @media screen and (max-width: 767px)
+                li.icon-item
+                    padding .82rem .15rem .42rem !important
     // 搜索栏入场动画
     @keyframes search-in
     {
@@ -408,11 +516,11 @@
     {
         0% {
             opacity 0
-            top 1.5rem
+            top 1.2rem
         }
         100% {
             opacity: 1
-            top 2rem
+            top 1.6rem
         }
     }
     .cart-enter-active

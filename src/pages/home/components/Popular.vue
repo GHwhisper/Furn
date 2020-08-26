@@ -1,8 +1,8 @@
 <template>
     <section class="pop-con">
-        <home-popular-small :product="popularList[0]"></home-popular-small>
-        <home-popular-big :product="popularList[1]"></home-popular-big>
-        <home-popular-small :product="popularList[2]"></home-popular-small>
+        <home-popular-small :product="popularList[0]" />
+        <home-popular-big :product="popularList[1]" />
+        <home-popular-small :product="popularList[2]" />
     </section>
 </template>
 
@@ -16,33 +16,14 @@
             HomePopularBig
         },
         props: {
-
+            popularList: {
+                type: Array,
+                required: true
+            }
         },
         data() {
             return{
-                popularList: [
-                    {
-                        id: '0001',
-                        name: 'Arm Chair',
-                        description: 'Nemo enim ipsam voluptatem quia volu ptas sit asperna aut odit aut fugit.',
-                        img: 'p1.png',
-                        price: 2000
-                    },
-                    {
-                        id: '0002',
-                        name: 'Latest Designed Stool and Chair',
-                        description: 'Edi Ut Perspiciatis Unde Omnis Iste Natusina Error Sit Voluptatem Accusantium Doloret Mque Laudantium, Totam Rem Aperiam.',
-                        img: 'p2.png',
-                        price: 400
-                    },
-                    {
-                        id: '0003',
-                        name: 'Hanging Lamp',
-                        description: 'Nemo enim ipsam voluptatem quia volu ptas sit asperna aut odit aut fugit.',
-                        img: 'p3.png',
-                        price: 200
-                    }
-                ]
+
             }
         },
         methods: {
@@ -56,16 +37,16 @@
         .pop-con
             width 1170px
             flex-direction row
-    @media screen and (min-width: 991px) and (max-width: 1200px)
+    @media screen and (min-width: 992px) and (max-width: 1200px)
         .pop-con
             width 970px
             flex-direction row
-    @media screen and (min-width: 766px) and (max-width: 990px)
+    @media screen and (min-width: 768px) and (max-width: 991px)
         .pop-con
             width 750px
             flex-direction column
             align-items center
-    @media screen and (max-width: 765px)
+    @media screen and (max-width: 767px)
         .pop-con
             width 90%
             flex-direction column

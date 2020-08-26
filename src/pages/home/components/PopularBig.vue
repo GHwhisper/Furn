@@ -1,14 +1,14 @@
 <template>
-    <div class="container">
-        <div class="pop-product">
+    <div class="pop-big-container">
+        <div class="pop-product" v-if="product">
             <div class="product-img">
-                <img :src="require(`../../../assets/images/${product.img}`)" alt="">
+                <img :src="product.img" alt="">
             </div>
             <div class="product-info">
-                <h2 class="product-name"><a href="">{{product.name}}</a></h2>
+                <h2 class="product-name" ><router-link :to="{path: `/product/detail/${product.productId}`, query: {skuid: product.id}}">{{product.name}}</router-link></h2>
                 <p class="product-intro">{{product.description}}</p>
-                <p class="product-sale">Sales Start from <span class="sale-price">￥{{product.price.toFixed(2)}}</span></p>
-                <button class="more-info-btn">Discover More</button>
+                <p class="product-sale">售价 <span class="sale-price">￥{{product.price.toFixed(2)}}</span></p>
+                <router-link tag="button" :to="{path: `/product/detail/${product.productId}`, query: {skuid: product.id}}" class="more-info-btn">探索更多</router-link>
             </div>
         </div>
     </div>
@@ -34,23 +34,24 @@
 <style lang="stylus" scoped>
     @import "~styles/varibles.styl"
     @media screen and (min-width: 1201px)
-        .container
+        .pop-big-container
             width 50%
             height 280px
+            .pop-product
             .pop-product
                 display flex
                 flex-direction row
                 align-items center
-    @media screen and (min-width: 991px) and (max-width: 1200px)
-        .container
+    @media screen and (min-width: 992px) and (max-width: 1200px)
+        .pop-big-container
             width 50%
             height 320px
             .pop-product
                 display flex
                 flex-direction row
                 align-items center
-    @media screen and (max-width: 990px)
-        .container
+    @media screen and (max-width: 991px)
+        .pop-big-container
             width 350px
             .pop-product
                 display flex
@@ -60,7 +61,7 @@
                 padding .6rem 0
                 .product-info
                     text-align center
-    .container
+    .pop-big-container
         box-sizing border-box
         padding 0 .3rem
         .pop-product
@@ -69,7 +70,11 @@
             background-color: $bgc_1
             overflow hidden
             .product-img
+                flex-shrink 0
+                width 200px
                 padding 0 .3rem
+                img
+                    width 100%
             .product-info
                 padding 0 .3rem
                 .product-name

@@ -1,12 +1,45 @@
 <template>
-    <div class="back-to-top">
+    <div class="back-to-top" @click="toTop" v-show="showTheTop">
         <span class="iconfont arrow">&#xe604;</span>
     </div>
 </template>
 
 <script>
     export default {
-        name: 'BackToTop'
+        name: 'BackToTop',
+        props: {
+
+        },
+        data() {
+            return {
+                showTheTop: false // 是否显示“回到顶部”按钮
+            }
+        },
+        methods: {
+            toTop() {   // 回到顶部
+                let top = document.documentElement.scrollTop  || document.body.scrollTop
+                const timeTop = setInterval(()=> {
+                    document.body.scrollTop = document.documentElement.scrollTop = top -= 50
+                    if (top <= 0){
+                        clearInterval(timeTop)
+                    }
+                }, 10)
+            },
+            handleScroll() {
+                const top = document.documentElement.scrollTop  || document.body.scrollTop
+                if (top > 700){
+                    this.showTheTop = true
+                } else {
+                    this.showTheTop = false
+                }
+            }
+        },
+        activated() {
+            window.addEventListener('scroll', this.handleScroll)
+        },
+        deactivated() {
+            window.removeEventListener('scroll', this.handleScroll)
+        }
     }
 </script>
 
@@ -111,4 +144,8 @@
             bottom -5px
         }
     }
+    @media screen and (max-width: 767px)
+        .back-to-top
+            right 15px
+            bottom 70px
 </style>

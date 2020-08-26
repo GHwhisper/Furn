@@ -1,11 +1,11 @@
 <template>
     <div class="product-item" >
-        <router-link tag="div" :to="'/product/detail/' + '0001'" class="img-con">
-            <img src="http://demo.cssmoban.com/cssthemes6/btmd_15_MyPortfolio/img/img_1.jpg" alt="">
+        <router-link tag="div" :to="{path: `/product/detail/${product.productId}`, query: {skuid: product.id}}" class="img-con">
+            <img :src="product.img" alt="">
         </router-link>
         <div class="info-con">
-            <div class="price">￥<strong>300.00</strong></div>
-            <router-link :to="'/product/detail/' + '0001'" class="name">商品名称</router-link>
+            <div class="price">￥<strong>{{product.price.toFixed(2)}}</strong></div>
+            <router-link :to="{path: `/product/detail/${product.productId}`, query: {skuid: product.id}}" class="name">{{product.name}}</router-link>
         </div>
     </div>
 </template>
@@ -14,13 +14,11 @@
     export default {
         name: 'ListProductItem',
         props: {
-
-        },
-        data() {
-            return {
-
+            product: {
+                type: Object,
+                required: true
             }
-        },
+        }
     }
 </script>
 
@@ -78,6 +76,8 @@
                 strong
                     font-size .4rem
             .name
+                height 40px
+                line-height 20px
                 font-size .3rem
                 color $fontColor-name
                 display -webkit-box

@@ -33,7 +33,7 @@
 
 <script>
     export default {
-        name: 'ClassifyMenu',
+        name: 'CategoryMenu',
         props: {
 
         },
@@ -79,18 +79,18 @@
     .menu-con
         width 1170px
         height 600px
-        margin 10px auto 0
+        margin 0 auto
         .fixed-col
             width 250px
             height 100%
             float left
-            background-color $activeColor
+            background-color $activeColor_3
             color #ffffff
             .col-name
                 padding 0 10px
                 height 40px
                 line-height 40px
-                background-color $activeColor_2
+                background-color $activeColor
             .menu
                 .menu-item
                     padding 0 20px
@@ -115,7 +115,7 @@
                                 &:last-child
                                     padding 0
                     &:hover
-                        background-color $activeColor_2
+                        background-color $activeColor
             .styles
                 padding 20px
                 a
@@ -125,7 +125,7 @@
                     color #ffffff
                     margin-right 10px
                     margin-bottom 10px
-                    background-color $activeColor_2
+                    background-color $activeColor
                     border-radius 50%
                     text-align center
                     line-height @height

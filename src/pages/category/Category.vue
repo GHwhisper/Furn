@@ -1,39 +1,39 @@
 <template>
-    <el-container>
-        <el-header height="100px">
-            <el-row type="flex" justify="center">
-                <el-col>
-                    <div class="brand-con">
-                        <span class="brand"><router-link to="/">Furn.</router-link></span>
-                        <span class="name">家具分类</span>
-                    </div>
-                    <search />
-                </el-col>
-            </el-row>
-        </el-header>
-        <classify-menu />
+    <el-container direction="vertical" v-loading.fullscreen.lock="fullscreenLoading">
+        <page-header class="page-header">
+            <template #name>家具分类</template>
+            <template #right><search /></template>
+        </page-header>
+<!--        <category-menu />-->
+        <cat-plate title="家具类别" :categories="styleCategory" />
+        <cat-plate title="空间设计" :categories="spaceCategory"/>
         <nav-tab-bar v-if="show" />
     </el-container>
 </template>
 
 <script>
+    import PageHeader from 'common/header/PageHeader'
     import Search from 'common/search/Search'
-    import ClassifyMenu from './components/Menu'
+    // import CategoryMenu from './components/Menu'
     import NavTabBar from 'common/navtab/NavTabBar'
+    import CatPlate from './components/CatPlate'
+    import axios from 'axios'
     export default {
-        name: 'Classify',
+        name: 'Category',
         components: {
+            PageHeader,
             Search,
-            ClassifyMenu,
-            NavTabBar
-        },
-        props: {
-
+            // CategoryMenu,
+            NavTabBar,
+            CatPlate
         },
         data() {
             return {
                 show: false,    // 控制NavTabBar显隐
                 screenWidth: window.innerWidth, //浏览器宽度
+                styleCategory: [],   // 风格分类
+                spaceCategory: [],  // 空间分类
+                fullscreenLoading: false
             }
         },
         mounted() {
@@ -43,10 +43,19 @@
                 })()
             }
             this.initScreen()
+            this.getCategoryInfo()
         },
         methods: {
+            async getCategoryInfo() {
+                this.fullscreenLoading = true
+                let res = await axios.get('/api/category')
+                let data = res.data
+                this.styleCategory = data.styles
+                this.spaceCategory = data.spaces
+                this.fullscreenLoading = false
+            },
             initScreen() {
-                this.show = this.screenWidth <= 768
+                this.show = this.screenWidth < 768
             }
         },
         watch: {
@@ -60,26 +69,9 @@
 
 <style lang="stylus" scoped>
     @import "~styles/varibles.styl"
-    .el-header
-        padding 0
-        .el-row
-            height 100%
-            .el-col
-                width 1170px
-                position relative
-                .brand-con
-                    position absolute
-                    bottom 10px
-                    .brand
-                        a
-                            color $activeColor
-                            font-size .8rem
-                    .name
-                        color $fontColor
-                        font-size .5rem
-                        margin-left 10px
-                .search
-                    position absolute
-                    right 0
-                    bottom 10px
+    .page-header
+        box-shadow none
+    @media screen and (max-width: 767px)
+        .el-container
+            padding-bottom 50px
 </style>

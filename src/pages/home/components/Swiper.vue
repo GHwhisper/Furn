@@ -1,19 +1,19 @@
 <template>
-    <div class="wrapper">
-        <swiper :options="swiperOption" class="swiper">
+    <div class="wrapper" v-loading.fullscreen.lock="fullscreenLoading">
+        <swiper :options="swiperOption" class="swiper" v-if="swiperList.length">
             <swiper-slide class="swiper-item" v-for="item in swiperList" :key="item.id">
                 <div class="item-con swiper-txt-con">
                     <div class="info-txt">
                         <h4 class="animated fadeInUp">{{item.praise}}</h4>
                         <h2 class="animated fadeInUp">{{item.name}}</h2>
                         <p class="intro animated fadeInUp">{{item.description}}</p>
-                        <p class="price animated fadeInUp">￥{{item.currentPrice}}<del>￥{{item.originalPrice}}</del></p>
-                        <button class="btn add-to-cart animated fadeInDown"><span class="iconfont add-icon">&#xe6f5;</span>Add to Cart</button>
-                        <button class="btn more-info animated fadeInDown">More Info</button>
+                        <p class="price animated fadeInUp">￥{{item.price.toFixed(2)}}<del v-if="item.originalPrice">￥{{item.originalPrice.toFixed(2)}}</del></p>
+                        <button class="btn add-to-cart animated fadeInDown" @click.prevent="addToCart(item)"><span class="iconfont add-icon">&#xe6f5;</span>加入购物车</button>
+                        <button class="btn more-info animated fadeInDown" @click.prevent="viewProductDetail(item.productId, item.id)">了解更多</button>
                     </div>
                 </div>
                 <div class="item-con swiper-img-con">
-                    <img :src="require(`../../../assets/images/${item.img}`)" :alt="item.name">
+                    <img :src="item.img" :alt="item.name">
                 </div>
             </swiper-slide>
             <div class="swiper-pagination" slot="pagination"></div>
@@ -22,10 +22,20 @@
 </template>
 
 <script>
+    import { swiper, swiperSlide } from 'vue-awesome-swiper'
+    import axios from 'axios'
+    import { mapState, mapMutations } from 'vuex'
     export default {
         name: 'HomeSwiper',
+        components: {
+            swiper,
+            swiperSlide
+        },
         props: {
-
+            swiperList: {
+                type: Array,
+                required: true
+            }
         },
         data() {
             return {
@@ -34,56 +44,67 @@
                     loop: true,
                     autoplay: 5000
                 },
-                swiperList: [
-                    {
-                        id: '0001',
-                        praise: 'Great Design Collection',
-                        name: 'Cloth Covered Accent Chair',
-                        description: 'Lorem Ipsum Dolor Sit Amet, Consectetur Adipisicing Elit, Sed Do Eiuiana Smod Tempor Ut Labore Et Dolore Magna Aliqua.Ut Enim Ad Minim Veniam, Quis Nostrud Exercitation Ullamco Laboris Nisi Ut Aliquip.',
-                        currentPrice: 399,
-                        originalPrice: 499,
-                        img: 'slider1.png'
-                    },
-                    {
-                        id: '0002',
-                        praise: 'Great Design Collection',
-                        name: 'Mapple Wood Accent Chair',
-                        description: 'Lorem Ipsum Dolor Sit Amet, Consectetur Adipisicing Elit, Sed Do Eiuiana Smod Tempor Ut Labore Et Dolore Magna Aliqua. Ut Enim Ad Minim Veniam, Quis Nostrud Exercitation Ullamco Laboris Nisi Ut Aliquip.',
-                        currentPrice: 199,
-                        originalPrice: 299,
-                        img: 'slider2.png'
-                    },
-                    {
-                        id: '0003',
-                        praise: 'Great Design Collection',
-                        name: 'Valvet Accent Arm Chair',
-                        description: 'Lorem Ipsum Dolor Sit Amet, Consectetur Adipisicing Elit, Sed Do Eiuiana Smod Tempor Ut Labore Et Dolore Magna Aliqua. Ut Enim Ad Minim Veniam, Quis Nostrud Exercitation Ullamco Laboris Nisi Ut Aliquip.',
-                        currentPrice: 299,
-                        originalPrice: 399,
-                        img: 'slider3.png'
-                    }
-                ]
+                fullscreenLoading: false
             }
+        },
+        methods: {
+            addToCart(product) {   // 加入购物车
+                if(!this.token) {
+                    this.$message({showClose: true,message: '您当前未登录,请登录后继续操作',type: 'warning',duration: 1500})
+                    setTimeout(() => {
+                        this.$router.push('/login')
+                    }, 500)
+                } else {
+                    this.fullscreenLoading = true
+                    axios.post('/api/addShoppingCat', {
+                        id: product.id,
+                        num: 1
+                    }).then(res => {
+                        let data = res.data
+                        if(data.addStatus === 200) {
+                            this.bus.$emit('updateCart')    // 更新导航栏中购物车数据
+                            this.changeCurrentProduct({product,num: 1})
+                            this.$router.push('/addsucc')
+                        }
+                        if(data.addStatus === 405) {
+                            this.$message({showClose: true, message: '添加购物车失败，请重试', type: 'warning', duration: 1500})
+                        }
+                        this.fullscreenLoading = false
+                    }).catch(e => {
+                        this.fullscreenLoading = false
+                        console.log(e)
+                    })
+                }
+            },
+            viewProductDetail(spuid, skuid) {
+                this.$router.push({path:`/product/detail/${spuid}`, query: {skuid: skuid}})
+            },
+            ...mapMutations(['changeCurrentProduct'])
+        },
+        computed: {
+            ...mapState(['token'])
         }
     }
 </script>
 
 <style lang="stylus" scoped>
     @import '~styles/varibles.styl'
+    // 设置轮播分页的颜色
     .wrapper >>> .swiper-pagination-bullet-active
         background-color: $activeColor
+    //  设置分页的位置
     .wrapper >>> .swiper-pagination-bullets
         position relative
         bottom 40px
-    @media screen and (min-width: 766px)
+    @media screen and (min-width: 768px)
         .wrapper >>> .swiper-pagination-bullets
             position relative
             bottom 60px
     // 容器.wrapper高度响应
-    @media screen and (min-width: 766px)
+    @media screen and (min-width: 768px)
         .wrapper
             height 820px
-    @media screen and (max-width: 765px)
+    @media screen and (max-width: 767px)
         .wrapper
             height auto
     .wrapper
@@ -96,19 +117,19 @@
         @media screen and (min-width: 1201px)
             .swiper
                 width 1170px
-        @media screen and (min-width: 991px) and (max-width: 1200px)
+        @media screen and (min-width: 992px) and (max-width: 1200px)
             .swiper
                 width 970px
-        @media screen and (min-width: 766px) and (max-width: 990px)
+        @media screen and (min-width: 768px) and (max-width: 991px)
             .swiper
                 width 750px
         //轮播图内部元素布局响应
-        @media (min-width: 766px)
+        @media (min-width: 768px)
             .swiper-txt-con
                 width 58%
             .swiper-img-con
                 width 42%
-        @media (max-width: 765px)
+        @media (max-width: 767px)
             .swiper
                 .item-con
                     width 100%
@@ -153,7 +174,7 @@
                         content ''
                         width 25px
                         height 1px
-                        background-color: $fontColor
+                        background-color $fontColor
                         position absolute
                         left 0
                         top .15rem

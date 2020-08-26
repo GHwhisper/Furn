@@ -1,16 +1,18 @@
 <template>
     <section class="feature-con">
-        <h2 class="title">Featured Products</h2>
+        <h2 class="title">独家特色</h2>
         <div class="feature-list">
             <div class="feature-item" v-for="item in featureList" :key="item.id">
                 <div class="feature">
-                    <img :src="require(`../../../assets/images/${item.img}`)" :alt="item.name">
+                    <div class="img-con">
+                        <img :src="item.img" :alt="item.name">
+                    </div>
                     <div class="info">
                         <p class="grade">
-                            <span class="stars"></span>
-                            <span class="comment">({{item.comments}} Review)</span>
+                            <el-rate disabled :value="item.rate"></el-rate>
+                            <span class="comment">({{item.comments}} 评论)</span>
                         </p>
-                        <router-link to="" class="name">{{item.name}}</router-link>
+                        <router-link :to="{path: `/product/detail/${item.productId}`, query: {skuid: item.id}}" class="name">{{item.name}}</router-link>
                         <p class="price">￥{{item.price.toFixed(2)}}</p>
                     </div>
                 </div>
@@ -23,40 +25,14 @@
     export default {
         name: 'HomeFeaturedProducts',
         props: {
-
+            featureList: {
+                type: Array,
+                required: true
+            }
         },
         data() {
             return {
-                featureList: [
-                    {
-                        id: '0001',
-                        name: 'Designed Sofa',
-                        price: 160,
-                        img: 'f1.jpg',
-                        comments: 20
-                    },
-                    {
-                        id: '0002',
-                        name: 'Dinning Table',
-                        price: 200,
-                        img: 'f2.jpg',
-                        comments: 45
-                    },
-                    {
-                        id: '0003',
-                        name: 'Chair And Table',
-                        price: 100,
-                        img: 'f3.jpg',
-                        comments: 60
-                    },
-                    {
-                        id: '0004',
-                        name: 'Modern Arm Chair',
-                        price: 299,
-                        img: 'f4.jpg',
-                        comments: 1000
-                    }
-                ]
+
             }
         }
     }
@@ -73,7 +49,9 @@
             display inline-block
         .info
             margin .5rem 0
-    @media screen and (min-width: 991px) and (max-width: 1200px)
+            .el-rate
+                display inline-block
+    @media screen and (min-width: 992px) and (max-width: 1200px)
         .feature-con
             width 970px
         .feature-item
@@ -82,7 +60,10 @@
             display inline-block
         .info
             margin .5rem 0
-    @media screen and (min-width: 766px) and (max-width: 990px)
+            .el-rate
+                display block
+                margin-bottom .1rem
+    @media screen and (min-width: 768px) and (max-width: 991px)
         .feature-con
             width 750px
         .feature-item
@@ -91,7 +72,9 @@
             display inline-block
         .info
             margin .5rem 0
-    @media screen and (max-width: 765px)
+            .el-rate
+                display inline-block
+    @media screen and (max-width: 767px)
         .feature-con
             width 100%
         .feature-item
@@ -100,6 +83,8 @@
             margin .6rem auto
         .info
             margin .5rem 0 0
+            .el-rate
+                display inline-block
     .feature-con
         padding-top 2rem
         margin 0 auto
@@ -119,9 +104,20 @@
                     text-align center
                     display flex
                     flex-direction column
-                    img
+                    .img-con
                         width 100%
-                        height auto
+                        height 0
+                        padding-top 100%
+                        overflow hidden
+                        position relative
+                        img
+                            width 100%
+                            height 100%
+                            position absolute
+                            top 0
+                            left 0
+                            right 0
+                            bottom 0
                     .info
                         flex 1
                         display flex
@@ -135,6 +131,10 @@
                             color $fontColor-name
                             font-size .32rem
                             font-weight bold
+                            padding 0 20px
+                            overflow hidden
+                            white-space nowrap
+                            text-overflow ellipsis
                         .price
                             color $fontColor-name
                             font-size .36rem

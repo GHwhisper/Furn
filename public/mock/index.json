@@ -1,0 +1,221 @@
+{
+  "data": {
+    "swiperList": [
+      {
+        "productId": 1,
+        "id": 123,
+        "praise": "雅致 现代简约",
+        "name": "白蜡木实木餐桌长方形饭桌",
+        "description": "木月 北欧餐桌椅组合现代简约大小户型白蜡木实木餐桌长方形饭桌 雅致 【1.2米】单餐桌",
+        "price": 399,
+        "img": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1585748433523&di=aca5bd839d53e2d48228e757da763d0d&imgtype=0&src=http%3A%2F%2Fphoto.16pic.com%2F00%2F17%2F98%2F16pic_1798277_b.jpg",
+        "color": "黄色",
+        "size": "60cm*60cm*60cm"
+      },
+      {
+        "productId": 2,
+        "id": 456,
+        "praise": "极简轻奢",
+        "name": "极简轻奢主卧软靠大床 单床 1500*2000框架款",
+        "description": "床北欧实木床1.8米双人床1.5米单人床1.2米1.35米床 现代简约布艺床可拆洗软包靠背松木出租房 浅灰色软靠 原木裸床 1500*2000",
+        "price": 199,
+        "img": "https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3758776860,1503180410&fm=26&gp=0.jpg",
+        "color": "黄色",
+        "size": "60cm*60cm*60cm"
+      },
+      {
+        "productId": 3,
+        "id": 789,
+        "praise": "原木色单床",
+        "name": "经济型日式简约现代双人橡木原木色婚床",
+        "description": "简莎 床 实木床 北欧主卧大床 1.8M1.5米1.2米经济型日式简约现代双人橡木原木色婚床 原木色单床 1200mmx2000mm",
+        "price": 299,
+        "img": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1585748433522&di=d1eb3faa46a79f9c4fe4e1bafd978378&imgtype=0&src=http%3A%2F%2Fimgyun.wy100.com%2Fwayes_sys%2Fimgdata%2Fhtmlimg%2F20160827%2Fbj2016_08_27_14_16_51.jpg",
+        "color": "黄色",
+        "size": "60cm*60cm*60cm"
+      }
+    ],
+    "popularList": [
+      {
+        "productId": 4,
+        "id": 123,
+        "name": "现代简约小户型布艺沙发",
+        "description": "现代简约小户型客厅三人位可拆洗沙发102367 布艺沙发(三人位)",
+        "img": "https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=1765477991,1605796947&fm=26&gp=0.jpg",
+        "price": 2000,
+        "color": "黄色",
+        "size": "60cm*60cm*60cm"
+      },
+      {
+        "productId": 5,
+        "id": 456,
+        "name": "布艺沙发 三人位北欧小户型沙发组合精品家具",
+        "description": "沙发 布艺沙发 三人位北欧小户型沙发组合精品家具 可拆洗客厅家具XH-191 蓝色+浅灰色 三人位+脚踏",
+        "img": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1585113460937&di=cba4d1a088937f5c9e1b61a7061a0ee0&imgtype=0&src=http%3A%2F%2Fam.zdmimg.com%2F201604%2F14%2F570ee86c510ee.jpg_a200.jpg",
+        "price": 400,
+        "color": "黄色",
+        "size": "60cm*60cm*60cm"
+      },
+      {
+        "productId": 6,
+        "id": 789,
+        "name": "北欧大理石餐桌组合火烧石餐桌简约现代桌椅",
+        "description": "餐桌 餐桌椅组合 北欧大理石餐桌组合火烧石餐桌简约现代桌椅6人长方形全实木饭桌 胡桃色大理石 1.3米单餐桌",
+        "img": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1585113580671&di=41f37696c0b27c146047883a829850a3&imgtype=0&src=http%3A%2F%2Fimg.daimg.com%2Fuploads%2Fallimg%2F120711%2F3-120G11U910.jpg",
+        "price": 200,
+        "color": "黄色",
+        "size": "60cm*60cm*60cm"
+      }
+    ],
+    "newArrivals": [
+      {
+        "productId": 7,
+        "id": 123,
+        "name": "白蜡木实木餐桌长方形饭桌",
+        "price": 65,
+        "img": "https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3981701187,1890829061&fm=15&gp=0.jpg",
+        "size": "60cm*60cm*60cm",
+        "color": "黄色"
+      },
+      {
+        "productId": 8,
+        "id": 456,
+        "name": "北欧大理石餐桌组合火烧石餐桌简约现代桌椅",
+        "price": 80,
+        "img": "https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3981701187,1890829061&fm=15&gp=0.jpg",
+        "size": "60cm*60cm*60cm",
+        "color": "黄色"
+      },
+      {
+        "productId": 9,
+        "id": 789,
+        "name": "简约家用小户型吃饭圆桌子",
+        "price": 40,
+        "img": "https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3981701187,1890829061&fm=15&gp=0.jpg",
+        "size": "60cm*60cm*60cm",
+        "color": "黄色"
+      },
+      {
+        "productId": 10,
+        "id": 111,
+        "name": "简约家用小户型吃饭圆桌子",
+        "price": 100,
+        "img": "https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3981701187,1890829061&fm=15&gp=0.jpg",
+        "size": "60cm*60cm*60cm",
+        "color": "黄色"
+      },
+      {
+        "productId": 11,
+        "id": 222,
+        "name": "简约家用小户型吃饭圆桌子",
+        "price": 120,
+        "img": "https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3981701187,1890829061&fm=15&gp=0.jpg",
+        "size": "60cm*60cm*60cm",
+        "color": "黄色"
+      },
+      {
+        "productId": 12,
+        "id": 333,
+        "name": "简约家用小户型吃饭圆桌子",
+        "price": 140,
+        "img": "https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3981701187,1890829061&fm=15&gp=0.jpg",
+        "size": "60cm*60cm*60cm",
+        "color": "黄色"
+      },
+      {
+        "productId": 13,
+        "id": 444,
+        "name": "简约家用小户型吃饭圆桌子",
+        "price": 90,
+        "img": "https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3981701187,1890829061&fm=15&gp=0.jpg",
+        "size": "60cm*60cm*60cm",
+        "color": "黄色"
+      },
+      {
+        "productId": 14,
+        "id": 555,
+        "name": "餐桌实木餐桌椅组合北欧日式小户型饭",
+        "price": 140,
+        "img": "https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3981701187,1890829061&fm=15&gp=0.jpg",
+        "size": "60cm*60cm*60cm",
+        "color": "黄色"
+      }
+    ],
+    "parallaxList": [
+      {
+        "productId": 15,
+        "id": 123,
+        "name": "现代简约轻奢真皮床北欧欧式主卧双人床单人床",
+        "intro": "现代简约轻奢真皮床北欧欧式主卧双人床单人床成人床软床简约卧室家具日式榻榻米婚床美式双人床 真皮单床（四色可选 拍下备注） 1500mm*2000mm框架结构",
+        "price": 3000,
+        "imgUrl": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1585119010827&di=923afab68fa44acffe0c3362dc86caca&imgtype=0&src=http%3A%2F%2Fimg1.yunshangxun.cn%2Fdata%2Fupload%2Fdefault%2F20190604%2F5cf5e07f9d548.jpg",
+        "size": "60cm*60cm*60cm",
+        "color": "黄色"
+      },{
+        "productId": 16,
+        "id": 456,
+        "name": "北欧风格实木床美式大人床现代简约1.8米双人1.5米单人床欧式婚床主卧床",
+        "intro": "北欧风格实木床美式大人床现代简约1.8米双人1.5米单人床欧式婚床主卧床卧室家具日式双人床 环保原木+送椰棕床垫【皮质软包】 1500mm*2000mm",
+        "price": 2999,
+        "imgUrl": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1585118652389&di=db8342ad14b8ebba08843255e4f23cd0&imgtype=0&src=http%3A%2F%2Fwww.jxjtsc.com%2Fuserfiles%2Fimage%2F20160725%2F251118577cf83fd08c7715.jpg",
+        "size": "60cm*60cm*60cm",
+        "color": "黄色"
+      },{
+        "productId": 17,
+        "id": 789,
+        "name": "现代简约布艺床可拆洗软包靠背松木",
+        "intro": "床北欧实木床1.8米双人床1.5米单人床1.2米1.35米床 现代简约布艺床可拆洗软包靠背松木出租房 浅灰色软靠 原木裸床",
+        "price": 8888,
+        "imgUrl": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1585118670855&di=6eda4f07b5beccea9c4b397d3cb46bb0&imgtype=0&src=http%3A%2F%2F00.minipic.eastday.com%2F20170818%2F20170818115239_d41d8cd98f00b204e9800998ecf8427e_2.jpeg",
+        "size": "60cm*60cm*60cm",
+        "color": "黄色"
+      }
+    ],
+    "featureList": [
+      {
+        "productId": 18,
+        "id": 89,
+        "name": "现代简约布艺床可拆洗软包靠背松木",
+        "price": 160,
+        "img": "https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3010581906,3173768570&fm=11&gp=0.jpg",
+        "size": "60cm*60cm*60cm",
+        "color": "黄色",
+        "rate": 4.7,
+        "comments": 20
+      },
+      {
+        "productId": 19,
+        "id": 88,
+        "name": "现代简约日式经济型橡木床",
+        "price": 200,
+        "img": "https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=2347885107,10619582&fm=26&gp=0.jpg",
+        "size": "60cm*60cm*60cm",
+        "color": "黄色",
+        "rate": 4,
+        "comments": 45
+      },
+      {
+        "productId": 20,
+        "id": 87,
+        "name": "床实木床新中式床1.8米1.5m双人",
+        "price": 100,
+        "img": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1585121753342&di=195cb3d595aaef2eb3fe27a65f471d06&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201603%2F23%2F20160323175136_ynKJw.jpeg",
+        "size": "60cm*60cm*60cm",
+        "color": "黄色",
+        "rate": 3.5,
+        "comments": 60
+      },
+      {
+        "productId": 21,
+        "id": 86,
+        "name": "单双人床高箱储物新中式软靠皮床",
+        "price": 299,
+        "img": "https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3720921420,2602028673&fm=26&gp=0.jpg",
+        "size": "60cm*60cm*60cm",
+        "color": "黄色",
+        "rate": 5,
+        "comments": 1000
+      }
+    ]
+  }
+}
