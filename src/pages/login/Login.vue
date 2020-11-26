@@ -21,7 +21,7 @@
                                 <div class="ver-con">
                                     <img v-if="codeImg" :src="codeImg" alt="" @click="getCodeImg">
                                     <span v-else class="code-img-fail"><i class="el-icon-picture-outline" /></span>
-                                    <span class="change-text" @click="getCodeImg">看不清，换一张</span>
+                                    <span class="change-text" @click="getCodeImg">换一张</span>
                                 </div>
                             </div>
                             <div :class="['tips', {'hide-tips': tipsVisible}]"><i class="el-icon-warning-outline" />{{tipText}}</div>

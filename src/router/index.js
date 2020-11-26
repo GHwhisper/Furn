@@ -1,27 +1,27 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from '@/pages/home/Home'
-import Login from '@/pages/login/Login'
-import Register from '@/pages/register/Register'
-import ProductDetail from '@/pages/product_detail/ProductDetail'
-import Cart from '@/pages/cart/Cart'
-import Personal from '@/pages/personal/Personal'
-import Category from '@/pages/category/Category'
-import List from '@/pages/list/List'
-import Order from '@/pages/order/Order'
-import SetUpInfo from '@/pages/setup_info/SetUpInfo'
-import Comment from '@/pages/comment/Comment'
-import Collection from '@/pages/collection/Collection'
-import History from '@/pages/history/History'
-import OrderDetail from '@/pages/order_detail/OrderDetail'
-import Address from '@/pages/address/Address'
-import Security from '@/pages/security/Security'
-import Shopping from '@/pages/shopping/Shopping'
-import FindPwd from '@/pages/find_pwd/FindPwd'
-import AfterService from '@/pages/after_service/AfterService'
-import AddSucc from '@/pages/add_succ/AddSucc'
-import Payment from '@/pages/payment/Payment'
-import PaySucc from '@/pages/pay_succ/PaySucc'
+const Home = () => import(/* webpackChunkName: "home" */ '@/pages/home/Home')
+const Login = () => import(/* webpackChunkName: "login" */ '@/pages/login/Login')
+const Register = () => import(/* webpackChunkName: "register" */ '@/pages/register/Register')
+const ProductDetail = () => import(/* webpackChunkName: "product_detail" */ '@/pages/product_detail/ProductDetail')
+const Cart = () => import(/* webpackChunkName: "cart" */ '@/pages/cart/Cart')
+const Personal = () => import(/* webpackChunkName: "personal" */ '@/pages/personal/Personal')
+const Category = () => import(/* webpackChunkName: "category" */ '@/pages/category/Category')
+const List = () => import(/* webpackChunkName: "list" */ '@/pages/list/List')
+const Order = () => import(/* webpackChunkName: "order" */ '@/pages/order/Order')
+const SetUpInfo = () => import(/* webpackChunkName: "setup_info" */ '@/pages/setup_info/SetUpInfo')
+const Comment = () => import(/* webpackChunkName: "comment" */ '@/pages/comment/Comment')
+const Collection = () => import(/* webpackChunkName: "collection" */ '@/pages/collection/Collection')
+const History = () => import(/* webpackChunkName: "history" */ '@/pages/history/History')
+const OrderDetail = () => import(/* webpackChunkName: "order_detail" */ '@/pages/order_detail/OrderDetail')
+const Address = () => import(/* webpackChunkName: "address" */ '@/pages/address/Address')
+const Security = () => import(/* webpackChunkName: "security" */ '@/pages/security/Security')
+const Shopping = () => import(/* webpackChunkName: "shopping" */ '@/pages/shopping/Shopping')
+const FindPwd = () => import(/* webpackChunkName: "find_pwd" */ '@/pages/find_pwd/FindPwd')
+const AfterService = () => import(/* webpackChunkName: "after_service" */ '@/pages/after_service/AfterService')
+const AddSucc = () => import(/* webpackChunkName: "add_succ" */ '@/pages/add_succ/AddSucc')
+const Payment = () => import(/* webpackChunkName: "payment" */ '@/pages/payment/Payment')
+const PaySucc = () => import(/* webpackChunkName: "pay_succ" */ '@/pages/pay_succ/PaySucc')
 
 Vue.use(Router)
 

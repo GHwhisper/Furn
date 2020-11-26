@@ -1,4 +1,8 @@
 const path = require('path');
+// 导入compression-webpack-plugin
+const CompressionWebpackPlugin = require('compression-webpack-plugin')
+// 定义压缩文件类型
+const productionGzipExtensions = ['js', 'css']
 function resolve(dir) {
     return path.join(__dirname, dir)
 }
@@ -8,6 +12,11 @@ module.exports = {
             .set('styles',resolve('src/assets/styles'))
             .set('common',resolve('src/common'))
             .set('js',resolve('src/assets/js'))
+        // 移除 preload 插件
+        config.plugins.delete('preload')
+        // 移除 prefetch 插件
+        config.plugins.delete('prefetch')
+        //config.plugins.delete('preload-${name}')//可配置移除预加载的页面。eg:login.html则添加config.plugins.delete('preload-login'),
     },
 
     devServer: {
@@ -38,6 +47,15 @@ module.exports = {
             assetFilter: function(assetFilename) {
                 return assetFilename.endsWith('.js')
             }
-        }
+        },
+        plugins: [
+            new CompressionWebpackPlugin({
+                filename: '[path].gz[query]',
+                algorithm: 'gzip',
+                test: new RegExp('\\.(' + productionGzipExtensions.join('|') + ')$'),
+                threshold: 10240,
+                minRatio: 0.8
+            })
+        ]
     }
 }

@@ -2,6 +2,8 @@
 node_modules
 /dist
 /furn
+/furn_electron_app
+/furn_hbuilder_app
 public/mock
 
 # local env files
