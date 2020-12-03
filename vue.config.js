@@ -1,4 +1,5 @@
 const path = require('path');
+const webpack = require('webpack')
 // 导入compression-webpack-plugin
 const CompressionWebpackPlugin = require('compression-webpack-plugin')
 // 定义压缩文件类型
@@ -37,17 +38,17 @@ module.exports = {
     assetsDir: 'assets', // 静态资源目录 (js, css, img, fonts)
 
     configureWebpack : {
-        performance: {
-            hints:'warning',
-            //入口起点的最大体积 整数类型（以字节为单位）
-            maxEntrypointSize: 50000000,
-            //生成文件的最大体积 整数类型（以字节为单位 300k）
-            maxAssetSize: 30000000,
-            //只给出 js 文件的性能提示
-            assetFilter: function(assetFilename) {
-                return assetFilename.endsWith('.js')
-            }
-        },
+        // performance: {
+        //     hints:'warning',
+        //     //入口起点的最大体积 整数类型（以字节为单位）
+        //     maxEntrypointSize: 50000000,
+        //     //生成文件的最大体积 整数类型（以字节为单位 300k）
+        //     maxAssetSize: 30000000,
+        //     //只给出 js 文件的性能提示
+        //     assetFilter: function(assetFilename) {
+        //         return assetFilename.endsWith('.js')
+        //     }
+        // },
         plugins: [
             new CompressionWebpackPlugin({
                 filename: '[path].gz[query]',
@@ -55,6 +56,10 @@ module.exports = {
                 test: new RegExp('\\.(' + productionGzipExtensions.join('|') + ')$'),
                 threshold: 10240,
                 minRatio: 0.8
+            }),
+            new webpack.optimize.LimitChunkCountPlugin({
+                maxChunks: 5,
+                minChunkSize: 100
             })
         ]
     }
